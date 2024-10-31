@@ -1,4 +1,4 @@
-package com.main.hunters_league.model;
+package com.maska.h_l.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

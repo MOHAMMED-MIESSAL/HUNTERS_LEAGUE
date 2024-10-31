@@ -1,4 +1,4 @@
-package com.main.hunters_league.model.enums;
+package com.maska.h_l.domain.enums;
 
 public enum Role {
     ADMIN, MEMBER, JURY

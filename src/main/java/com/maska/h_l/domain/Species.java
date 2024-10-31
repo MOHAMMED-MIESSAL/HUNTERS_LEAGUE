@@ -1,8 +1,9 @@
-package com.main.hunters_league.model;
+package com.maska.h_l.domain;
 
 
-import com.main.hunters_league.model.enums.Difficulty;
-import com.main.hunters_league.model.enums.SpeciesType;
+
+import com.maska.h_l.domain.enums.Difficulty;
+import com.maska.h_l.domain.enums.SpeciesType;
 import jakarta.persistence.*;
 import lombok.*;
 
