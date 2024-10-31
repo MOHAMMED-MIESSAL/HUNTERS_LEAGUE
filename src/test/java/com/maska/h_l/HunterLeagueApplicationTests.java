@@ -1,10 +1,10 @@
-package com.main.hunters_league;
+package com.maska.h_l;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HuntersLeagueApplicationTests {
+class HunterLeagueApplicationTests {
 
     @Test
     void contextLoads() {

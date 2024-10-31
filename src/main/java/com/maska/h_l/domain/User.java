@@ -1,7 +1,7 @@
-package com.main.hunters_league.model;
+package com.maska.h_l.domain;
 
-
-import com.main.hunters_league.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.maska.h_l.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,10 +12,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -43,7 +42,6 @@ public class User {
     private LocalDateTime licenseExpirationDate;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Participation> participations;
-
 }
-
