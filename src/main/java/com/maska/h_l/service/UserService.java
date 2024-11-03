@@ -2,8 +2,7 @@ package com.maska.h_l.service;
 
 import com.maska.h_l.domain.User;
 import com.maska.h_l.repository.UserRepository;
-import com.maska.h_l.service.dto.UserDTO;
-import com.maska.h_l.service.dto.mapper.UserMapperUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,39 +14,92 @@ import java.util.*;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ParticipationService participationService;
 
-    public UserService(UserRepository userRepository) {
+    // Injection par constructeur de UserRepository et ParticipationService
+    public UserService(UserRepository userRepository, ParticipationService participationService) {
         this.userRepository = userRepository;
+        this.participationService = participationService;
     }
 
-    public UserDTO createUser(User user) {
-        return UserMapperUtil.userToUserDTO(userRepository.save(user));
-    }
 
-    public Optional<UserDTO> getUserById(UUID id) {
-        return userRepository.findById(id).map(UserMapperUtil::userToUserDTO);
-    }
+    /*
+     *    Implémenter les méthodes suivantes pour gérer les opérations CRUD sur la table User
+     */
 
-    public Page<UserDTO> getAllUsers(int page, int size) {
+    public Page<User> getAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<User> usersPage = userRepository.findAll(pageable);
-        // Convert each User to UserDTO
-        return usersPage.map(UserMapperUtil::userToUserDTO);
+        return userRepository.findAll(pageable);
     }
 
-    public User updateUser(UUID id, User user) {
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> getUserById(UUID userId) {
+        return userRepository.findById(userId);
+    }
+
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-    public void deleteUser(UUID id) {
-        userRepository.deleteById(id);
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
-    public Optional<UserDTO> findUserByNameOrEmail(String input) {
-        return userRepository.findByUsername(input)
-                .map(UserMapperUtil::userToUserDTO)
-                .or(() -> userRepository.findByEmail(input).map(UserMapperUtil::userToUserDTO));
+    @Transactional
+    public void deleteUser(UUID userId) {
+        // userRepository.deleteById(userId);
+
+        // Suppression des participations associées à cet utilisateur
+        participationService.deleteAllByUserId(userId);
+        // Suppression de l'utilisateur
+        userRepository.deleteById(userId);
     }
+
+    public Optional<User> findUserByNameOrEmail(String input) {
+        return userRepository.findByUsername(input)
+                .or(() -> userRepository.findByEmail(input));
+    }
+
+    /*
+    *    Implémenter les méthodes suivantes pour gérer les opérations CRUD sur la table User
+    *   en utilisant la classe UserMapperUtil pour convertir les entités User en DTO UserDTO et vice versa.
+     */
+
+//    public Page<UserDTO> getAllUsers(int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<User> usersPage = userRepository.findAll(pageable);
+//        // Convert each User to UserDTO
+//        return usersPage.map(UserMapperUtil::userToUserDTO);
+//    }
+//
+//    public UserDTO createUser(User user) {
+//        return UserMapperUtil.userToUserDTO(userRepository.save(user));
+//    }
+//
+//    public Optional<UserDTO> getUserById(UUID id) {
+//        return userRepository.findById(id).map(UserMapperUtil::userToUserDTO);
+//    }
+//
+//    public User updateUser(UUID id, User user) {
+//        return userRepository.save(user);
+//    }
+//
+//    public void deleteUser(UUID id) {
+//        userRepository.deleteById(id);
+//    }
+//
+//    public Optional<UserDTO> findUserByNameOrEmail(String input) {
+//        return userRepository.findByUsername(input)
+//                .map(UserMapperUtil::userToUserDTO)
+//                .or(() -> userRepository.findByEmail(input).map(UserMapperUtil::userToUserDTO));
+//    }
 
 
     /*

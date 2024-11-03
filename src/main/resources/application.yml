@@ -1,5 +1,11 @@
 spring:
 
+  datasource:
+        url: jdbc:postgresql://localhost:5433/samurai
+        username: samurai
+        password: password
+        driver-class-name: org.postgresql.Driver
+
   docker:
     compose:
       file: src/main/docker/compose.yaml
