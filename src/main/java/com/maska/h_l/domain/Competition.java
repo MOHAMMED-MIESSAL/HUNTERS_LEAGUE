@@ -1,6 +1,7 @@
 package com.maska.h_l.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.maska.h_l.domain.enums.SpeciesType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +37,7 @@ public class Competition {
     private Boolean openRegistration;
 
     @OneToMany(mappedBy = "competition")
+    @JsonIgnore
     private List<Participation> participations;
 
 }
