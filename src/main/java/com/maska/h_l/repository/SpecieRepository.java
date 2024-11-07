@@ -1,0 +1,14 @@
+package com.maska.h_l.repository;
+
+import com.maska.h_l.domain.Species;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface SpecieRepository extends JpaRepository<Species, UUID> {
+    Page<Species> findAll(Pageable pageable);
+}
