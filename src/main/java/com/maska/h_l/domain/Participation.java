@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "participation", indexes = {
+        @Index(name = "idx_participation_user_id", columnList = "user_id")
+})
 @Getter
 @Setter
 @Builder
