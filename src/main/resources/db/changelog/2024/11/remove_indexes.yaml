@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1730829751131-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropIndex:
+            indexName: idx_hunt_species_id
+            tableName: hunt
+
+  - changeSet:
+      id: 1730829751131-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropIndex:
+            indexName: idx_hunt_participation_id
+            tableName: hunt
