@@ -1,5 +1,6 @@
 package com.maska.h_l.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "participation", indexes = {
-        @Index(name = "idx_participation_user_id", columnList = "user_id")
+        @Index(name = "idx_participation_user_id", columnList = "user_id"),
+        @Index(name = "idx_participation_competition_id", columnList = "competition_id")
 })
 @Getter
 @Setter
@@ -27,6 +29,7 @@ public class Participation{
     private Competition competition;
 
     @OneToMany(mappedBy = "participation")
+    @JsonIgnore
     private List<Hunt> hunts;
 
     private Double score;

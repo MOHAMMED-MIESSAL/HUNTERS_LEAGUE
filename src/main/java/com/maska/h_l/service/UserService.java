@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,11 +16,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ParticipationService participationService;
+    private final PasswordEncoder passwordEncoder;
 
     // Injection par constructeur de UserRepository et ParticipationService
-    public UserService(UserRepository userRepository, ParticipationService participationService) {
+    public UserService(UserRepository userRepository, ParticipationService participationService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.participationService = participationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -65,6 +68,14 @@ public class UserService {
     public Optional<User> findUserByNameOrEmail(String input) {
         return userRepository.findByUsername(input)
                 .or(() -> userRepository.findByEmail(input));
+    }
+
+    public Optional<User> authenticateUser(String usernameOrEmail, String password) {
+        Optional<User> user = findUserByNameOrEmail(usernameOrEmail);
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+            return user;
+        }
+        return Optional.empty();
     }
 
     /*
