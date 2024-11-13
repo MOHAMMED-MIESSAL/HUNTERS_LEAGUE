@@ -50,4 +50,14 @@ public class CompetitionController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUserToCompetition(@RequestParam UUID userId, @RequestParam UUID competitionId) {
+        String responseMessage = competitionService.registerUserToCompetition(userId, competitionId);
+        if (responseMessage.contains("successfully")) {
+            return ResponseEntity.ok(responseMessage);
+        } else {
+            return ResponseEntity.badRequest().body(responseMessage);
+        }
+    }
+
 }
