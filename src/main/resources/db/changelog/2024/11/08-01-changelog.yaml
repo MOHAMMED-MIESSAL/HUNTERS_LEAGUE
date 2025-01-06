@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1731076147440-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: participation_id
+            indexName: idx_hunt_participation_id
+            tableName: hunt
+  - changeSet:
+      id: 1731076147440-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: species_id
+            indexName: idx_hunt_species_id
+            tableName: hunt
+
